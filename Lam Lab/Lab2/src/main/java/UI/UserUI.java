@@ -14,7 +14,7 @@ import java.util.List;
 
 //@WebServlet(name = "UserUI", value = "/UserUI")
 @WebServlet({ "/UserUI", "/UserUI/edit/*", "/UserUI/create", "/UserUI/update",
-        "/UserUI/delete", "/UserUI/reset", "/UserUI/page" })
+        "/UserUI/delete", "/UserUI/reset", "/UserUI/page", "/UserUI/search" })
 public class UserUI extends HttpServlet {
     public UserUI(){
         super();
@@ -55,19 +55,20 @@ public class UserUI extends HttpServlet {
             form = new User(id, password, fullname, email, isAdmin);
             dao.create(form);
             form = new User();
-            request.setAttribute("message", "Tạo người dùng thành công!");
+            request.setAttribute("message", "Tao nguoi dung thanh cong!");
         } else if (path.contains("update")) {
             form = new User(id, password, fullname, email, isAdmin);
             dao.update(form);
-            request.setAttribute("message", "Cập nhật người dùng thành công!");
+            request.setAttribute("message", "Cap nhat nguoi dung thanh cong!");
         } else if (path.contains("delete")) {
             dao.deleteById(id);
             form = new User();
-            request.setAttribute("message", "Xóa thành công!");
+            request.setAttribute("message", "Xoa thanh cong!");
         }
         else if (path.contains("page")){
             // xử lý page
             String pageParam = request.getParameter("page");
+//            request.setAttribute("pageParam",pageParam);
             if (pageParam != null && !pageParam.isEmpty()) {
                 try {
                     currentPage = Integer.parseInt(pageParam);
@@ -76,6 +77,14 @@ public class UserUI extends HttpServlet {
                 }
             }
             list = dao.showpage(currentPage);
+        }else if (path.contains("search")){
+            // xử lý search
+            String searchname = request.getParameter("fullname");
+            String searchadmin = request.getParameter("admin");
+//            request.setAttribute("searchname",searchname);
+//            request.setAttribute("searchadmin",searchadmin);
+            isAdmin = "1".equals(searchadmin);
+            list = dao.search(searchname,isAdmin);
         }
         else {
             form = new User();

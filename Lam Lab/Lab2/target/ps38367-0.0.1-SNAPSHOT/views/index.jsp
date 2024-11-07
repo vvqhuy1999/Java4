@@ -42,6 +42,16 @@
     <hr>
     <!-- TABLE -->
     <h2>${message}</h2>
+    <form method="get">
+        <h2>Tìm kiếm</h2>
+        <input name="fullname" placeholder="fullname">
+        <label><input type="radio" name="admin" value="1" ${item.admin == true ? 'checked' : ''} required> Admin</label>
+        <label><input type="radio" name="admin" value="0" ${item.admin == false ? 'checked' : ''} required> User</label>
+        <button formaction="${path}/search">Search</button>
+    </form>
+<%--    <h2>--%>
+<%--        ${searchadmin}, ${searchname}--%>
+<%--    </h2>--%>
     <table border="1" style="width: 100%">
         <thead>
         <tr>
@@ -67,12 +77,13 @@
         </c:forEach>
         </tbody>
     </table>
-    <h1>${pageParam}</h1>
+<%--    <h1>${pageParam}</h1>--%>
     <form method="post">
         <c:forEach begin="1" end="${sopage}" var="i">
             <button class="btn btn-primary" formaction="${path}/page?page=${i}">${i}</button>
         </c:forEach>
     </form>
+
 </div>
 </body>
 </html>

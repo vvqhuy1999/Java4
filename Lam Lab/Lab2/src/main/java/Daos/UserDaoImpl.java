@@ -113,25 +113,25 @@ public class UserDaoImpl implements UserDAO{
 //        List<User> list = query.getResultList();
 //        return list;
 //    }
-public List<User> showpage(int page) {
-    // Số trang bắt đầu từ 1 nên cần trừ 1 khi tính offset
-    int pageNumber = page - 1;  // Điều chỉnh pageNumber
-    int pageSize = 5;
+    public List<User> showpage(int page) {
+        // Số trang bắt đầu từ 1 nên cần trừ 1 khi tính offset
+        int pageNumber = page - 1;  // Điều chỉnh pageNumber
+        int pageSize = 5;
 
-    // Tính offset (vị trí bắt đầu)
-    int offset = pageNumber * pageSize;
+        // Tính offset (vị trí bắt đầu)
+        int offset = pageNumber * pageSize;
 
-    try {
-        String jpql = "SELECT o FROM User o ";
-        TypedQuery<User> query = em.createQuery(jpql, User.class);
-        query.setFirstResult(offset);      // Sử dụng offset đã tính
-        query.setMaxResults(pageSize);
-        return query.getResultList();
-    } catch (Exception e) {
-        e.printStackTrace();
-        return new ArrayList<>();  // Trả về list rỗng nếu có lỗi
+        try {
+            String jpql = "SELECT o FROM User o ";
+            TypedQuery<User> query = em.createQuery(jpql, User.class);
+            query.setFirstResult(offset);      // Sử dụng offset đã tính
+            query.setMaxResults(pageSize);
+            return query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();  // Trả về list rỗng nếu có lỗi
+        }
     }
-}
 
     public Long countUser(){
         String jpql = "SELECT count(o) FROM User o ";
@@ -139,5 +139,38 @@ public List<User> showpage(int page) {
         Long so = query.getSingleResult();
         return so;
     }
+
+    public List<User> search(String fullname, boolean admin) {
+        String jpql = "SELECT o FROM User o WHERE o.fullname LIKE :searchname AND o.admin = :searchadmin";
+        TypedQuery<User> query = em.createQuery(jpql,User.class);
+        query.setParameter("searchname","%" + fullname + "%");
+        query.setParameter("searchadmin",admin);
+        List<User> list = query.getResultList();
+        return list;
+    }
+
+//    public List<User> searchtest() {
+//
+//        String jpql = "SELECT o FROM User o WHERE o.fullname LIKE :searchname AND o.admin = :searchadmin";
+//        TypedQuery<User> query = em.createQuery(jpql,User.class);
+//        query.setParameter("searchname","%One%");
+//        query.setParameter("searchadmin",true);
+//        List<User> list = query.getResultList();
+//        list.forEach(user -> {
+//            String id = user.getId();
+//            String email = user.getEmail();
+//            String fullname = user.getFullname();
+//            String password = user.getPassword();
+//            boolean admin = user.getAdmin();
+//            System.out.println(fullname + ":" + admin + ":" + password);
+//        });
+//        return list;
+//    }
+
+//    public static void main(String[] args) {
+//        UserDaoImpl u = new UserDaoImpl();
+//        u.searchtest();
+//
+//    }
 
 }
