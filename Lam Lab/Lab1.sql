@@ -1,7 +1,7 @@
-﻿create database PolyOE;
+﻿create database PolyOEUser;
 
 go
-use PolyOE;
+use PolyOEUser;
 go
 
 create table Users(

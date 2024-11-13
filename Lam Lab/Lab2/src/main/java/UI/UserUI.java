@@ -94,7 +94,7 @@ public class UserUI extends HttpServlet {
 //        System.out.println("Number of users: " + list.size());
         Long so = dao.countUser();
 
-        int sopage = (so.intValue() / 5 == 0) ? (so.intValue() / 5) : (so.intValue() / 5 + 1);
+        int sopage = (so.intValue() % 5 == 0) ? (so.intValue() / 5) : (so.intValue() / 5 + 1);
 
         request.setAttribute("sopage", sopage);
         request.setAttribute("list", list);
