@@ -2,6 +2,7 @@ package Entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,7 +11,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-//@Builder
+@Builder
 @Entity
 @Table(name = "Videos", uniqueConstraints = {@UniqueConstraint(columnNames = {"UserId", "VideoID"})})
 public class Video {
@@ -21,6 +22,8 @@ public class Video {
     private String title;
     @Column(name = "Poster", columnDefinition = "nvarchar(255)")
     private String poster;
+    @Column(name = "Link", columnDefinition = "nvarchar(255)")
+    private String link;
     @Column(name = "Views")
     private Integer views;
     @Column(name = "Description", columnDefinition = "nvarchar(255)")

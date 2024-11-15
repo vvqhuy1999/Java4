@@ -2,6 +2,7 @@ package Impl;
 
 import Daos.VideoDAO;
 
+import Entity.User;
 import Entity.Video;
 import Utils.XJPA;
 import jakarta.persistence.EntityManager;
@@ -37,15 +38,9 @@ public class VideoDAOImpl implements VideoDAO {
 
     @Override
     public void update(Video entity) {
-        Video video = em.find(Video.class, entity.getId());
-        video.setTitle(entity.getTitle());
-        video.setPoster(entity.getPoster());
-        video.setViews(entity.getViews());
-        video.setDescription(entity.getDescription());
-        video.setActive(entity.getActive());
         em.getTransaction().begin();
         try {
-            em.merge(video);
+            em.merge(entity);
             em.getTransaction().commit();
         }catch (Exception e){
             e.printStackTrace();
@@ -63,4 +58,27 @@ public class VideoDAOImpl implements VideoDAO {
             em.getTransaction().rollback();
         }
     }
+
+    //Tìm các video có title chứa từ khóa <<keyword>>
+    public List<Video> findkeyTitle (String title){
+        String jpql = "SELECT v FROM Video v WHERE v.title LIKE :findTitle";
+        TypedQuery<Video> query = em.createQuery(jpql,Video.class);
+        // Thiết lập giá trị cho các tham số
+        query.setParameter("findTitle", "%" + title + "%");
+        List<Video> videos = query.getResultList();
+        videos.forEach(video -> {
+            System.out.println(video.getTitle());
+        });
+        return videos;
+    }
+
+
+
+
+//    public static void main(String[] args) {
+//        VideoDAOImpl v  = new VideoDAOImpl();
+////        v.findkeyTitle("Maroon ");
+//        v.findvideoLikeMost();
+//    }
+
 }

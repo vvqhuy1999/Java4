@@ -42,6 +42,8 @@
             <tr>
                 <td>${f.video.title}</td>
                 <td>${f.user.fullname}</td>
+                <td><a href="${f.video.link}"><img src="${f.video.poster}" style="width: 100px; height: 100px;"></a>
+                </td>
                 <td>${f.likedate}</td>
             </tr>
         </c:forEach>

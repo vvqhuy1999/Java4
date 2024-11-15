@@ -3,6 +3,7 @@ package Impl;
 import Daos.FavoriteDAO;
 import Entity.Favorite;
 import Entity.Share;
+import Entity.Video;
 import Utils.XJPA;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
@@ -56,6 +57,25 @@ public class FavoriteDAOImpl implements FavoriteDAO {
         }catch (Exception e){
             em.getTransaction().rollback();
         }
+    }
+
+    //Truy vấn 10 video được yêu thích nhiều nhất
+    public List<Object[]> findvideoLikeMost (){
+        String jpql = "SELECT  o.video.id,o.video.title, count(o) FROM Favorite o GROUP BY o.video.id,o.video.title ORDER BY count(o) DESC";
+
+        TypedQuery<Object[]> query = em.createQuery(jpql,Object[].class);
+        query.setMaxResults(5);
+        List<Object[]> soluongs = query.getResultList();
+        soluongs.forEach(soluong -> {
+            System.out.println("Video ID: " + soluong[0] + " Title:" + soluong[1] +
+                    " | Số lượt thích: " + soluong[2] );
+        });
+        return soluongs;
+    }
+        public static void main(String[] args) {
+        FavoriteDAOImpl f  = new FavoriteDAOImpl();
+
+        f.findvideoLikeMost();
     }
 
 

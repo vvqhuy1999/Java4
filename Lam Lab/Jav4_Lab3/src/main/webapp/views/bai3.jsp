@@ -34,6 +34,7 @@
         <tr>
             <th>Video Title</th>
             <th>Người thích</th>
+            <th>Video</th>
             <th>Ngày thích</th>
         </tr>
         </thead>
@@ -42,6 +43,8 @@
             <tr>
                 <td>${f.video.title}</td>
                 <td>${f.user.fullname}</td>
+                <td><a href="${f.video.link}"><img src="${f.video.poster}" style="width: 100px; height: 100px;"></a>
+                </td>
                 <td>${f.likedate}</td>
             </tr>
         </c:forEach>

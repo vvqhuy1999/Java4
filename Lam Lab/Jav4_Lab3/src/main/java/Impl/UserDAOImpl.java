@@ -86,9 +86,23 @@ public class UserDAOImpl implements UserDAO {
         return users;
     }
 
+    // Lab4 bai1
+    public User findUserEmail(String userId, String userEmail){
+        String jpql = "SELECT u FROM User u WHERE u.id = :findUser OR u.email = :findEmail";
+        TypedQuery<User> query = em.createQuery(jpql,User.class);
+        // Thiết lập giá trị cho các tham số
+        query.setParameter("findUser", userId);
+        query.setParameter("findEmail", userEmail);
+        User users = query.getSingleResult();
+        System.out.println(users.getEmail() + users.getId());
+        return users;
+    }
+
+
 //    public static void main(String[] args) {
 //        UserDAOImpl u = new UserDAOImpl();
 //        u.findUserLike();
+//        u.findUserEmail(null,"user1@gmail.com");
 //        u.findAll();
 //    }
 }
