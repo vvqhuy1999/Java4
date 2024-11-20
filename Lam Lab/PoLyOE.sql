@@ -46,7 +46,15 @@ CREATE TABLE Shares (
     VideoId Nvarchar(10) NOT NULL,  
     Emails NVARCHAR(100) NOT NULL,  
     ShareDate DATE  
-);  
+);
+
+CREATE TABLE Logs(
+	Id INT IDENTITY(1,1) PRIMARY KEY,
+	Url NVARCHAR(255) NOT NULL,
+	Time NVARCHAR(100),
+	Username Nvarchar(10),
+);
+
 
 -- Insert Users  
 INSERT INTO [Users] (Id, Password, Email, Fullname, Admin) VALUES  
@@ -209,7 +217,13 @@ ALTER TABLE Shares
 ADD CONSTRAINT FK_Share_Video FOREIGN KEY (VideoId) REFERENCES Videos(Id);
 
 
+-- Foreign key constraints for Logs table  
+ALTER TABLE Logs  
+ADD CONSTRAINT FK_Log_User FOREIGN KEY (username) REFERENCES Users(Id);
+
 select * from Users;
 select * from Favorites;
 select * from Videos;
 select * from Shares;
+
+select * from logs
