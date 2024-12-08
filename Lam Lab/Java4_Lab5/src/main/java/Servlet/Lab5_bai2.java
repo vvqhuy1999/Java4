@@ -110,7 +110,22 @@ public class Lab5_bai2 implements ServletContextListener, HttpSessionListener {
 
     @Override
     public void sessionDestroyed(HttpSessionEvent se) {
-        HttpSessionListener.super.sessionDestroyed(se);
+//        HttpSession session = se.getSession();
+//        ServletContext context = session.getServletContext();
+//
+//        // Kiểm tra xem session này đã được đếm chưa
+//        if (session.getAttribute("counted") != null) {
+//            AtomicInteger visitorCount = (AtomicInteger) context.getAttribute("visitors");
+//
+//            if (visitorCount != null) {
+//                // Giảm số đếm và cập nhật lại vào application scope
+//                int newCount = visitorCount.decrementAndGet();
+//                context.setAttribute("visitors", visitorCount);
+//
+//                System.out.println("Visitor roi di - Session ID: " + session.getId() +
+//                        ", Tong so con lai: " + newCount);
+//            }
+//        }
     }
 
 }
